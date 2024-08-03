@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Button = ({ children, onClick, variant, className, type }) => (
   <button
     type={type}
@@ -57,6 +59,26 @@ const AvatarFallback = ({ children }) => (
   </div>
 );
 
+const Tabs = ({ activeTab, onChange, children }) => (
+  <div>
+    <div className="flex border-b">
+      {React.Children.map(children, (child) => (
+        <button
+          className={`mr-4 pb-2 ${activeTab === child.props.id ? 'border-b-2 border-primary' : ''}`}
+          onClick={() => onChange(child.props.id)}
+        >
+          {child.props.label}
+        </button>
+      ))}
+    </div>
+    <div className="mt-4">
+      {React.Children.map(children, (child) => activeTab === child.props.id && child)}
+    </div>
+  </div>
+);
+
+const Tab = ({ children }) => <div>{children}</div>;
+
 export {
   Button,
   Label,
@@ -67,5 +89,7 @@ export {
   CardContent,
   Avatar,
   AvatarImage,
-  AvatarFallback
+  AvatarFallback,
+  Tabs,
+  Tab
 };
